@@ -1,0 +1,68 @@
+/* Styles for the chatbot interface with GPT-style colors */
+.chat-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f3f3f3; /* Couleur de fond plus claire */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.chat-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.chat-input {
+  width: calc(100% - 80px); /* Ajuster la largeur si nécessaire */
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.chat-button {
+  padding: 10px 20px;
+  margin-left: 10px;
+  background-color: #007bff; /* Couleur d'accentuation (bleu) */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.chat-button:hover {
+  background-color: #0056b3; /* Couleur d'accentuation (bleu foncé) au survol */
+}
+
+.chat-history {
+  list-style-type: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.chat-message {
+  background-color: #f0f0f0; /* Couleur de fond des messages du chatbot */
+  color: #333; /* Couleur de texte pour le contraste */
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  max-width: 70%;
+  word-wrap: break-word;
+}
+
+.user-message {
+  background-color: #cce5ff; /* Couleur de fond pour les messages de l'utilisateur */
+}
+
+.bot-message {
+  background-color: #f0f0f0; /* Couleur de fond pour les messages du chatbot */
+}
+
+.chat-message p {
+  margin: 0;
+  font-size: 14px;
+}

@@ -1,0 +1,7 @@
+{
+    "presets": [
+      "@babel/preset-env", // Assure la compatibilité avec différents navigateurs
+      "@babel/preset-react" // Permet la transformation JSX
+    ]
+  }
+  
