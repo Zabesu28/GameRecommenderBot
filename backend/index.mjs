@@ -1,12 +1,22 @@
-const express = require('express');
-const axios = require('axios');
-const bodyParser = require('body-parser');
+import express from 'express';
+import axios from 'axios';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 const app = express();
-const cors = require('cors');
 const PORT = 5000;
 
 app.use(cors());
 app.use(bodyParser.json());
+
+export function add(a, b) {
+  return a + b;
+}
+
+let apikey = process.env.API_KEY;
 
 const games = [
   { id: 1, title: 'Super Mario Odyssey', genre: 'Platformer' },
@@ -55,7 +65,7 @@ app.get('/api/genres', async (req, res) => {
       const plateformes = rawgResponse.data.results;
       res.json(plateformes);
     } catch (error) {
-      console.error('Error calling RAWG API:', error);
+      console.error('Error calling RAWG API');
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
@@ -97,7 +107,7 @@ app.post('/api/chat', async (req, res) => {
         {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer sk-proj-PGSAsbTLz5CM9hfUHjUIT3BlbkFJ0anlqEWnGRZFpelq4JN2`
+            'Authorization': `Bearer ${apikey}`
           }
         }
       );
@@ -158,7 +168,7 @@ app.post('/api/chat', async (req, res) => {
         {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer sk-proj-PGSAsbTLz5CM9hfUHjUIT3BlbkFJ0anlqEWnGRZFpelq4JN2`
+            'Authorization': `Bearer ${apikey}`
           }
         }
       );
@@ -173,3 +183,5 @@ app.post('/api/chat', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+export default app;
