@@ -42,9 +42,9 @@ GameRecommenderBot est un chatbot interactif capable de recommander des jeux vid
     API_GAMES_KEY=rawg_api_key
     ```
 
-    Vous pouvez trouver les clé d'api ici :  
-    -[OpenAi](https://openai.com/index/openai-api/) 
-    -[RAWG](https://rawg.io/apidocs)
+Vous pouvez trouver les clé d'api ici :  
+  -[OpenAi](https://openai.com/index/openai-api/) 
+  -[RAWG](https://rawg.io/apidocs)
 
 2. Créez un fichier `.env.development` dans le répertoire `frontend` avec les variables suivantes :
 
@@ -104,5 +104,5 @@ Si ca ne fonctionne pas, alors...
 - **Requêtes HTTP** : Axios
 - **Environnement d'exécution** : Node.js
 - **API** : 
-    -[OpenAi](https://openai.com)
-    -[RAWG](https://rawg.io/apidocs)
+  -[OpenAi](https://openai.com)
+  -[RAWG](https://rawg.io/apidocs)
