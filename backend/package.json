@@ -2,9 +2,9 @@
     "name": "game-recommender-bot",
     "version": "1.0.0",
     "description": "Chatbot de recommandation de jeux vidéo",
-    "main": "app.js",
+    "main": "index.mjs",
     "scripts": {
-        "start": "node app.js",
+        "start": "nodemon index.mjs",
         "test": "mocha"
     },
     "author": "ZABETH Romain",

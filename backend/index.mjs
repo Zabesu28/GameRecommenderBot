@@ -17,6 +17,7 @@ export function add(a, b) {
 }
 
 let apikey = process.env.API_KEY;
+let apiGameKey = process.env.API_GAMES_KEY;
 
 const games = [
   { id: 1, title: 'Super Mario Odyssey', genre: 'Platformer' },
@@ -38,15 +39,15 @@ app.get('/api/genres', async (req, res) => {
         'https://api.rawg.io/api/genres',
         {
           params: {
-            key: '7c91604c2e8046eba54b666f6a76edc3'
+            key: apiGameKey
           }
         }
       );
   
       const genres = rawgResponse.data.results;
+      console.log(genres);
       res.json(genres);
     } catch (error) {
-      console.error('Error calling RAWG API:', error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
@@ -57,7 +58,7 @@ app.get('/api/genres', async (req, res) => {
         'https://api.rawg.io/api/platforms',
         {
           params: {
-            key: '7c91604c2e8046eba54b666f6a76edc3'
+            key: apiGameKey
           }
         }
       );
@@ -65,13 +66,13 @@ app.get('/api/genres', async (req, res) => {
       const plateformes = rawgResponse.data.results;
       res.json(plateformes);
     } catch (error) {
-      console.error('Error calling RAWG API');
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
 
 app.post('/api/chat', async (req, res) => {
-    let exemple = ` Exemple :
+    let exemple = `
+
     <h2>Xenoblade chronicles<h2>
         <b>Plateforme : </b><p></p>
         <br>
@@ -82,7 +83,7 @@ app.post('/api/chat', async (req, res) => {
         <a>En savoir + (si le lien est fonctionnel)</a>
         <br>`
     let context = "Toi gpt, tu es un dans la peau passionné de jeu vidéo et tu veux recommander les jeux qui correspondent le plus aux utilisateurs."
-    const genre = req.body.message;
+    const prompt = req.body.message;
     try {
   
       const response = await axios.post(
@@ -94,8 +95,12 @@ app.post('/api/chat', async (req, res) => {
                 content: `${context}`,
             },
             {
+              role: "system",
+              content: `Base toi sur cette exemple : ${exemple}`,
+            },
+            {
               role: "user",
-              content: `Recommande moi un ou plusieurs jeux pour ce type de personne ${genre}. ${exemple}`,
+              content: `Recommande moi un ou plusieurs jeux pour ce type de personne ${prompt}.`,
             },
           ],
           model: "gpt-4o",
@@ -132,22 +137,8 @@ app.post('/api/chat', async (req, res) => {
         <br>`
     let context = "Toi gpt, tu es un dans la peau passionné de jeu vidéo et tu veux recommander les meilleurs jeux aux utilistateurs."
     const genre = req.body.genre;
-    console.log(genre)
     const platform = req.body.platform;
     const commentaire = req.body.commentaire;
-    var listGame = '';
-    const rawgResponse = await axios.get(
-        'https://api.rawg.io/api/games',
-        {
-          params: {
-            key: '7c91604c2e8046eba54b666f6a76edc3',
-            genres : [genre]
-          }
-        });
-    for (let game of rawgResponse.data.results){
-        listGame = listGame + '/' + game.name;
-        console.log(listGame);
-    }
     try {
   
       const response = await axios.post(
@@ -155,8 +146,25 @@ app.post('/api/chat', async (req, res) => {
         {
         messages: [
             {
+              role: "system",
+              content: `${context}`,
+            },
+            {
+              role: "system",
+              content: `Base toi sur cette exemple : ${exemple}`,
+            },
+            {
+              role: "system",
+              content: `Limite toi au jeu de ce genre : ${genre}. Dans le cas ou il n'y a pas de genre, prend les tous`,
+            },
+            {
+              role: "system",
+              content: `Limite toi aux jeux de la plateforme suivante : ${platform}. Dans le cas ou il n'y a pas de plateforme, prend les tous`,
+            },
+
+            {
               role: "user",
-              content: `${context} Pioche 3 ou 4 jeux dans la liste suivantes et explique les : ${listGame} . ${exemple}`,
+              content: `${context} Recommande moi un ou plusieurs jeux pour ce type de personne : ${commentaire}. Tu peux aussi proposer des licences`,
             },
           ],
           model: "gpt-4o",

@@ -29,6 +29,8 @@ describe('GET /api/platforms', () => {
     expect(res.body[0]).to.have.property('name', 'Platform 1');
     expect(res.body[1]).to.have.property('id', 2);
     expect(res.body[1]).to.have.property('name', 'Platform 2');
+
+    console.log('Liste des plateformes :', res.body);
   });
 
   it('should return a 500 error if RAWG API call fails', async () => {
@@ -46,6 +48,7 @@ describe('GET /api/platforms', () => {
 
     // Assert the response
     expect(res.body).to.have.property('error', 'Internal Server Error');
+    console.error("Erreur de l'OpenAI API:", res.body.error);
   });
 });
 
@@ -76,6 +79,8 @@ describe('POST /api/chat', () => {
 
     // Assert the response
     expect(res.body).to.have.property('message', 'Bot response content');
+
+    console.log('Réponse du bot :', res.body.message);
   });
 
   it('should handle errors from OpenAI API', async () => {
@@ -95,6 +100,8 @@ describe('POST /api/chat', () => {
 
     // Assert the response
     expect(res.body).to.have.property('error', 'Internal Server Error');
+
+    console.error("Erreur de l'OpenAI API:", res.body.error);
   });
 });
   
