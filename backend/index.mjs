@@ -12,10 +12,6 @@ const PORT = 5000;
 app.use(cors());
 app.use(bodyParser.json());
 
-export function add(a, b) {
-  return a + b;
-}
-
 let apikey = process.env.API_KEY;
 let apiGameKey = process.env.API_GAMES_KEY;
 
@@ -70,61 +66,7 @@ app.get('/api/genres', async (req, res) => {
     }
   });
 
-app.post('/api/chat', async (req, res) => {
-    let exemple = `
-
-    <h2>Xenoblade chronicles<h2>
-        <b>Plateforme : </b><p></p>
-        <br>
-        <b>Genre :</b> <p></p> 
-        <br>
-        <b>Description :</b> <p></p>
-        <br>
-        <a>En savoir + (si le lien est fonctionnel)</a>
-        <br>`
-    let context = "Toi gpt, tu es un dans la peau passionné de jeu vidéo et tu veux recommander les jeux qui correspondent le plus aux utilisateurs."
-    const prompt = req.body.message;
-    try {
-  
-      const response = await axios.post(
-        'https://api.openai.com/v1/chat/completions',
-        {
-        messages: [
-            {
-                role: "system",
-                content: `${context}`,
-            },
-            {
-              role: "system",
-              content: `Base toi sur cette exemple : ${exemple}`,
-            },
-            {
-              role: "user",
-              content: `Recommande moi un ou plusieurs jeux pour ce type de personne ${prompt}.`,
-            },
-          ],
-          model: "gpt-4o",
-          temperature: 0.7,
-          top_p: 1,
-          n: 1,
-          stop: null,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apikey}`
-          }
-        }
-      );
-      const botMessage = response.data.choices[0].message.content;
-      res.json({ message: botMessage });
-    } catch (error) {
-    //   console.error('Error calling OpenAI API:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  });
-
-  app.post('/api/chat/filter', async (req, res) => {
+  app.post('/api/chat', async (req, res) => {
     let exemple = ` Exemple :
     <h2>Xenoblade chronicles<h2>
         <b>Plateforme : </b><p></p>
@@ -135,10 +77,10 @@ app.post('/api/chat', async (req, res) => {
         <br>
         <a>En savoir + (si le lien est fonctionnel)</a>
         <br>`
-    let context = "Toi gpt, tu es un dans la peau passionné de jeu vidéo et tu veux recommander les meilleurs jeux aux utilistateurs."
+    let context = "Toi gpt, tu es dans la peau passionné de jeu vidéo et tu veux recommander les jeux qui corresponderont le plus aux attentes de la personne."
     const genre = req.body.genre;
     const platform = req.body.platform;
-    const commentaire = req.body.commentaire;
+    const commentaire = req.body.message;
     try {
   
       const response = await axios.post(
@@ -155,16 +97,15 @@ app.post('/api/chat', async (req, res) => {
             },
             {
               role: "system",
-              content: `Limite toi au jeu de ce genre : ${genre}. Dans le cas ou il n'y a pas de genre, prend les tous`,
+              content: `Limite toi au jeu de ce genre : ${genre}. Dans le cas ou il n'y a pas de genre, alors base toi que sur le message de l'utilisateur`,
             },
             {
               role: "system",
-              content: `Limite toi aux jeux de la plateforme suivante : ${platform}. Dans le cas ou il n'y a pas de plateforme, prend les tous`,
+              content: `Limite toi aux jeux de la plateforme suivante : ${platform}. Dans le cas ou il n'y a pas de plateforme, alors base toi que sur le message de l'utilisateur`,
             },
-
             {
               role: "user",
-              content: `${context} Recommande moi un ou plusieurs jeux pour ce type de personne : ${commentaire}. Tu peux aussi proposer des licences`,
+              content: `${context} Recommande moi un ou plusieurs jeux qui correspond à ce type de personne : ${commentaire}.`,
             },
           ],
           model: "gpt-4o",

@@ -22,21 +22,10 @@ export const getPlatforms = async (setPlatforms) => {
 
 export const handleChat = async (setChatResponse, selectedGenre, selectedPlatform, query) => {
   setChatResponse("vide");
-  if(!selectedGenre && !selectedPlatform){
-
   try {
-    const response = await axios.post(`${apiUrl}/api/chat`, { message: query });
+    const response = await axios.post(`${apiUrl}/api/chat`, { genre: selectedGenre, platform: selectedPlatform, message: query });
     setChatResponse(response.data.message);
   } catch (error) {
     console.error('Error fetching chat response:', error);
   }
-}
-else{
-  try {
-    const response = await axios.post(`${apiUrl}/api/chat/filter`, { genre: selectedGenre, platform: selectedPlatform, message: query });
-    setChatResponse(response.data.message);
-  } catch (error) {
-    console.error('Error fetching chat response:', error);
-  }
-}
 };
