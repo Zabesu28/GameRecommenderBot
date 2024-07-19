@@ -41,7 +41,7 @@ app.get('/api/genres', async (req, res) => {
       );
   
       const genres = rawgResponse.data.results;
-      console.log(genres);
+      console.log(genres.map(g => g.name));
       res.json(genres);
     } catch (error) {
       res.status(500).json({ error: 'Internal Server Error' });
@@ -77,7 +77,7 @@ app.get('/api/genres', async (req, res) => {
         <br>
         <a>En savoir + (si le lien est fonctionnel)</a>
         <br>`
-    let context = "Toi gpt, tu es dans la peau passionné de jeu vidéo et tu veux recommander les jeux qui corresponderont le plus aux attentes de la personne."
+    let context = "Toi gpt, tu es dans la peau passionné de jeu vidéo et tu veux recommander les jeux qui corresponderont le plus aux attentes de l'utilisateur."
     const genre = req.body.genre;
     const platform = req.body.platform;
     const commentaire = req.body.message;
