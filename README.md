@@ -26,6 +26,7 @@ GameRecommenderBot est un chatbot interactif capable de recommander des jeux vid
 3. Installez les dépendances pour le backend et le frontend :
 
     ```bash
+    npm install
     cd backend
     npm install
     cd ../frontend
@@ -38,7 +39,7 @@ GameRecommenderBot est un chatbot interactif capable de recommander des jeux vid
 
     ```
     API_KEY=your_openai_api_key
-    API_GAMES_KEY=rawg_api_key (https://rawg.io/apidocs)
+    API_GAMES_KEY=rawg_api_key
     ```
 
 2. Créez un fichier `.env.development` dans le répertoire `frontend` avec les variables suivantes :
@@ -98,4 +99,4 @@ Si ca ne fonctionne pas, alors...
   - Backend : Express.js
 - **Requêtes HTTP** : Axios
 - **Environnement d'exécution** : Node.js
-- **API** : OpenAi (https://openai.com) && RAWG (https://rawg.io/apidocs)
+- **API** : [OpenAi](https://openai.com) && [RAWG](https://rawg.io/apidocs)
