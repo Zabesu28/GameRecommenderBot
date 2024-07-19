@@ -43,8 +43,8 @@ GameRecommenderBot est un chatbot interactif capable de recommander des jeux vid
     ```
 
     Vous pouvez trouver les clé d'api ici :  
-        - [OpenAi](https://openai.com/index/openai-api/) 
-        - [RAWG](https://rawg.io/apidocs)
+    - [OpenAi](https://openai.com/index/openai-api/) 
+    - [RAWG](https://rawg.io/apidocs)
 
 2. Créez un fichier `.env.development` dans le répertoire `frontend` avec les variables suivantes :
 
